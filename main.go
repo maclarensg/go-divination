@@ -1,14 +1,30 @@
 package main
 
 import (
+	"flag"
 	"log"
 )
 
 func main() {
-	lunarDateTime, err := getLunarDateTime()
-	if err != nil {
-		log.Fatalln("Error:", err)
-	}
+	parseDateStr := flag.String("date", "", "Date to parse")
+	flag.Parse()
 
-	lunarDateTime.PrintDivineResult()
+	// *parseDateStr if empty
+
+	if *parseDateStr == "" {
+
+		lunarDateTime, err := getLunarDateTime()
+		if err != nil {
+			log.Fatalln("Error:", err)
+		}
+
+		lunarDateTime.PrintDivineResult()
+	} else {
+		lunarDateTime, err := parseLunarDateTime(*parseDateStr)
+		if err != nil {
+			log.Fatalln("Error:", err)
+		}
+
+		lunarDateTime.PrintDivineResult()
+	}
 }
