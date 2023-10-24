@@ -14,6 +14,14 @@ type DateTime struct {
 	Year, Month, Day, Hour, Minute, Second int
 }
 
+// countNumber(n int) , where n is the number input and will return an int looping from 1 to 6, e.g. 1=1, 6=6, 11=5, 12=12.
+func countNumber(n int) int {
+	if n%6 == 0 {
+		return 6
+	}
+	return n % 6
+}
+
 // return the string representation of the DateTime struct
 func (dt *DateTime) String() string {
 	return fmt.Sprintf("Lunar %d/%d/%d, %02d:%02d:%02d",
@@ -24,9 +32,10 @@ func (dt *DateTime) String() string {
 // printDivineResult returns the divine message for the current time
 func (dt *DateTime) PrintDivineResult() {
 	fmt.Println("Lunar DateTime:", dt.String())
-	fmt.Println(divineTable[dt.Month%6])
-	fmt.Println(divineTable[dt.Day%6])
-	fmt.Println(divineTable[TimeTable(dt.Hour)%6])
+
+	fmt.Println(divineTable[countNumber(dt.Month)])
+	fmt.Println(divineTable[countNumber(dt.Day)])
+	fmt.Println(divineTable[countNumber(TimeTable(dt.Hour))])
 }
 
 // getLunarDateTime retrieves the current Lunar Date and Time
